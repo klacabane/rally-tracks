@@ -1,0 +1,48 @@
+{% import "rally.helpers" as rally with context %}
+
+{% set search_iterations = search_iterations | default(20) %} 
+{% set search_warmup_iterations = search_warmup_iterations | default(50) %}
+{% set target_interval = target_interval | default(4) %}
+{% set touch_bulk_indexing_clients = touch_bulk_indexing_clients | default(3) %}
+{% set touch_bulk_size = touch_bulk_size | default(50) %}
+
+{% set start_time = "2024-10-30T23:00:00.000Z" %}
+{% set end_time = "2024-10-30T23:05:00.000Z" %}
+
+{
+  "version": 2,
+  "description": "Track for EEM entities queries",
+  "composable-templates": [
+    {
+      "name": "pod-template",
+      "index-pattern": "k8s-pod*",
+      "delete-matching-indices": true,
+      "template": "pod-template.json"
+    }
+  ],
+  "data-streams": [
+    {
+      "name": "k8s-pod"
+    }
+  ],
+  "corpora": [
+    {
+      "name": "k8s-pod",
+      "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
+      "documents": [
+        {
+          "target-data-stream": "k8s-pod",
+          "source-file": "doc-ds-metrics-kubernetes.pod.json.bz2",
+          "document-count": 1000000,
+          "uncompressed-bytes": 3643397132
+        }
+      ]
+    }
+  ],
+  "operations": [
+    {{ rally.collect(parts="operations/*.json") }}
+  ],
+  "challenges": [
+    {{ rally.collect(parts="challenges/*.json") }}
+  ]
+}

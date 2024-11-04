@@ -1,0 +1,41 @@
+{
+  "name": "index-pod",
+  "operation-type": "bulk",
+  "corpora" : "k8s-pod",
+  "bulk-size": {{bulk_size | default(5000)}},
+  "detailed-results": {{detailed_results | default("false")}},
+  "ingest-percentage": {{ingest_percentage | default(100)}}
+},
+{
+  "name": "esql_count-per-hostname",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-* | eval start_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"{{ start_time }}\"), end_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"{{ end_time }}\") | WHERE @timestamp >= start_time AND @timestamp <= end_time | STATS count=count(*) BY host.hostname | LIMIT 10000"
+},
+{
+  "name": "esql_count-per-hostname-no-data",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-* | eval start_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"2024-09-30T23:00:00.000Z\"), end_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"2024-09-30T23:05:00.000Z\") | WHERE @timestamp >= start_time AND @timestamp <= end_time | STATS count=count(*) BY host.hostname | LIMIT 10000"
+},
+{
+  "name": "esql_cpu-usage-per-pod",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-* | eval by_interval = date_trunc(10 seconds, @timestamp), start_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"{{ start_time }}\"), end_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"{{ end_time }}\") | WHERE @timestamp >= start_time AND @timestamp <= end_time | STATS avg(kubernetes.pod.cpu.usage.limit.pct) BY kubernetes.pod.name, by_interval | LIMIT 10000"
+},
+{
+  "name": "esql_cpu-usage-per-pod-no-data",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-* | eval by_interval = date_trunc(10 seconds, @timestamp), start_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"2024-09-30T23:00:00.000Z\"), end_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"2024-09-30T23:05:00.000Z\") | WHERE @timestamp >= start_time AND @timestamp <= end_time | STATS avg(kubernetes.pod.cpu.usage.limit.pct) BY kubernetes.pod.name, by_interval | LIMIT 10000"
+},
+{
+  "name": "touch-pod-index",
+  "operation-type": "bulk",
+  "corpora" : "k8s-pod",
+  "bulk-size": {{touch_bulk_size}},
+  "ingest-percentage": 100,
+  "pipeline": "timestamp_pipeline",
+  "detailed-results": {{detailed_results | default("false")}}
+}
