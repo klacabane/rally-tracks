@@ -111,7 +111,7 @@
           "clients": 3,
           "tasks": [
             {
-              "name": "esql_touch-pod",
+              "name": "esql_touch-pod-1",
               "operation": "touch-pod-index",
               "clients": {{touch_bulk_indexing_clients}}
             },
@@ -136,12 +136,12 @@
           "clients": 3,
           "tasks": [
             {
-              "name": "esql_touch-pod",
+              "name": "esql_touch-pod-3",
               "operation": "touch-pod-index",
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
-              "name": "esql_touch-pod-2",
+              "name": "esql_touch-pod-4",
               "operation": "touch-pod-index-2",
               "clients": {{touch_bulk_indexing_clients}}
             },
@@ -161,12 +161,12 @@
           "clients": 3,
           "tasks": [
             {
-              "name": "esql_touch-pod",
+              "name": "esql_touch-pod-5",
               "operation": "touch-pod-index",
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
-              "name": "esql_touch-pod-2",
+              "name": "esql_touch-pod-6",
               "operation": "touch-pod-index-2",
               "clients": {{touch_bulk_indexing_clients}}
             },
@@ -186,12 +186,12 @@
           "clients": 3,
           "tasks": [
             {
-              "name": "esql_touch-pod",
+              "name": "esql_touch-pod-7",
               "operation": "touch-pod-index",
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
-              "name": "esql_touch-pod-2",
+              "name": "esql_touch-pod-8",
               "operation": "touch-pod-index-2",
               "clients": {{touch_bulk_indexing_clients}}
             },
@@ -211,12 +211,12 @@
           "clients": 3,
           "tasks": [
             {
-              "name": "esql_touch-pod",
+              "name": "esql_touch-pod-9",
               "operation": "touch-pod-index",
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
-              "name": "esql_touch-pod-2",
+              "name": "esql_touch-pod-10",
               "operation": "touch-pod-index-2",
               "clients": {{touch_bulk_indexing_clients}}
             },
@@ -236,12 +236,12 @@
           "clients": 3,
           "tasks": [
             {
-              "name": "esql_touch-pod",
+              "name": "esql_touch-pod-11",
               "operation": "touch-pod-index",
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
-              "name": "esql_touch-pod-2",
+              "name": "esql_touch-pod-12",
               "operation": "touch-pod-index-2",
               "clients": {{touch_bulk_indexing_clients}}
             },
