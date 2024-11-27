@@ -7,30 +7,6 @@
   "ingest-percentage": {{ingest_percentage | default(100)}}
 },
 {
-  "name": "esql_count-per-hostname",
-  "operation-type": "esql",
-  "detailed-results": {{detailed_results | default("false")}},
-  "query": "FROM k8s-* | eval start_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"{{ start_time }}\"), end_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"{{ end_time }}\") | WHERE @timestamp >= start_time AND @timestamp <= end_time | STATS count=count(*) BY host.hostname | LIMIT 10000"
-},
-{
-  "name": "esql_count-per-hostname-no-data",
-  "operation-type": "esql",
-  "detailed-results": {{detailed_results | default("false")}},
-  "query": "FROM k8s-* | eval start_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"2024-09-30T23:00:00.000Z\"), end_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"2024-09-30T23:05:00.000Z\") | WHERE @timestamp >= start_time AND @timestamp <= end_time | STATS count=count(*) BY host.hostname | LIMIT 10000"
-},
-{
-  "name": "esql_cpu-usage-per-pod",
-  "operation-type": "esql",
-  "detailed-results": {{detailed_results | default("false")}},
-  "query": "FROM k8s-* | eval by_interval = date_trunc(10 seconds, @timestamp), start_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"{{ start_time }}\"), end_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"{{ end_time }}\") | WHERE @timestamp >= start_time AND @timestamp <= end_time | STATS avg(kubernetes.pod.cpu.usage.limit.pct) BY kubernetes.pod.name, by_interval | LIMIT 10000"
-},
-{
-  "name": "esql_cpu-usage-per-pod-no-data",
-  "operation-type": "esql",
-  "detailed-results": {{detailed_results | default("false")}},
-  "query": "FROM k8s-* | eval by_interval = date_trunc(10 seconds, @timestamp), start_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"2024-09-30T23:00:00.000Z\"), end_time = DATE_PARSE(\"yyyy-MM-dd'T'HH:mm:ss.SSSX\",\"2024-09-30T23:05:00.000Z\") | WHERE @timestamp >= start_time AND @timestamp <= end_time | STATS avg(kubernetes.pod.cpu.usage.limit.pct) BY kubernetes.pod.name, by_interval | LIMIT 10000"
-},
-{
   "name": "touch-pod-index",
   "operation-type": "bulk",
   "corpora" : "k8s-pod",
@@ -38,4 +14,57 @@
   "ingest-percentage": 100,
   "pipeline": "timestamp_pipeline",
   "detailed-results": {{detailed_results | default("false")}}
-}
+},
+{
+  "name": "index-pod-2",
+  "operation-type": "bulk",
+  "corpora" : "pod-k8s",
+  "bulk-size": {{bulk_size | default(5000)}},
+  "detailed-results": {{detailed_results | default("false")}},
+  "ingest-percentage": {{ingest_percentage | default(100)}}
+},
+{
+  "name": "touch-pod-index-2",
+  "operation-type": "bulk",
+  "corpora" : "pod-k8s",
+  "bulk-size": {{touch_bulk_size}},
+  "ingest-percentage": 100,
+  "pipeline": "timestamp_pipeline",
+  "detailed-results": {{detailed_results | default("false")}}
+},
+{
+  "name": "esql_single_source-limit-100_optimized",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-* METADATA _index | EVAL entity.id = host.hostname | WHERE host.hostname IS NOT NULL | WHERE @timestamp >= \"2024-10-30T23:00:00.000Z\" AND @timestamp <= \"2024-10-30T23:05:00.000Z\" | STATS host.hostname=TOP(host.hostname, 1, \"desc\"), entity.last_seen_timestamp=MAX(@timestamp) BY entity.id | SORT entity.last_seen_timestamp DESC | LIMIT 100",
+},
+{
+  "name": "esql_single_source-limit-10000_optimized",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-* METADATA _index | WHERE host.hostname IS NOT NULL | WHERE @timestamp >= \"2024-10-30T23:00:00.000Z\" AND @timestamp <= \"2024-10-30T23:05:00.000Z\" | STATS host.hostname=TOP(host.hostname, 1, \"desc\"), entity.last_seen_timestamp=MAX(@timestamp) BY host.hostname | SORT entity.last_seen_timestamp DESC | LIMIT 10000",
+},
+{
+  "name": "esql_single_source-limit-100_non-optimized",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-* METADATA _index | EVAL is_source_0 = (_index LIKE \"*k8s-**\") AND (host.hostname IS NOT NULL) AND (@timestamp IS NOT NULL) | EVAL entity.id = CASE(is_source_0, host.hostname) | EVAL entity.timestamp = CASE(is_source_0, @timestamp) | WHERE entity.id IS NOT NULL | WHERE (is_source_0 AND (@timestamp >= \"2024-10-30T23:00:00.000Z\" AND @timestamp <= \"2024-10-30T23:05:00.000Z\")) | STATS host.hostname=TOP(host.hostname, 1, \"desc\"), entity.last_seen_timestamp=MAX(entity.timestamp) BY entity.id | SORT entity.last_seen_timestamp DESC | LIMIT 100",
+},
+{
+  "name": "esql_single_source-limit-10000_non-optimized",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-* METADATA _index | EVAL is_source_0 = (_index LIKE \"*k8s-**\") AND (host.hostname IS NOT NULL) AND (@timestamp IS NOT NULL) | EVAL entity.id = CASE(is_source_0, host.hostname) | EVAL entity.timestamp = CASE(is_source_0, @timestamp) | WHERE entity.id IS NOT NULL | WHERE (is_source_0 AND (@timestamp >= \"2024-10-30T23:00:00.000Z\" AND @timestamp <= \"2024-10-30T23:05:00.000Z\")) | STATS host.hostname=TOP(host.hostname, 1, \"desc\"), entity.last_seen_timestamp=MAX(entity.timestamp) BY entity.id | SORT entity.last_seen_timestamp DESC | LIMIT 10000",
+},
+{
+  "name": "esql_two_sources-limit-100",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-*, pod-* METADATA _index | EVAL is_source_0 = (_index LIKE \"*k8s-**\") AND (host.hostname IS NOT NULL) AND (@timestamp IS NOT NULL) | EVAL is_source_1 = (_index LIKE \"*pod-k8s**\") AND (host.name IS NOT NULL) AND (event.ingested IS NOT NULL) | EVAL entity.id = CASE(is_source_0, host.hostname, is_source_1, host.name) | EVAL entity.timestamp = CASE(is_source_0, @timestamp, is_source_1, event.ingested) | WHERE entity.id IS NOT NULL | WHERE (is_source_0 AND (@timestamp >= \"2024-10-30T23:00:00.000Z\" AND @timestamp <= \"2024-10-30T23:05:00.000Z\")) OR (is_source_1 AND (event.ingested >= \"2024-10-30T23:00:00.000Z\" AND event.ingested <= \"2024-10-30T23:05:00.000Z\")) | STATS host.hostname=TOP(host.hostname, 1, \"desc\"), host.name=TOP(host.name, 1, \"desc\"), entity.last_seen_timestamp=MAX(entity.timestamp) BY entity.id | SORT entity.last_seen_timestamp DESC | LIMIT 100",
+},
+{
+  "name": "esql_two_sources-limit-10000",
+  "operation-type": "esql",
+  "detailed-results": {{detailed_results | default("false")}},
+  "query": "FROM k8s-*, pod-* METADATA _index | EVAL is_source_0 = (_index LIKE \"*k8s-**\") AND (host.hostname IS NOT NULL) AND (@timestamp IS NOT NULL) | EVAL is_source_1 = (_index LIKE \"*pod-**\") AND (host.name IS NOT NULL) AND (event.ingested IS NOT NULL) | EVAL entity.id = CASE(is_source_0, host.hostname, is_source_1, host.name) | EVAL entity.timestamp = CASE(is_source_0, @timestamp, is_source_1, event.ingested) | WHERE entity.id IS NOT NULL | WHERE (is_source_0 AND (@timestamp >= \"2024-10-30T23:00:00.000Z\" AND @timestamp <= \"2024-10-30T23:05:00.000Z\")) OR (is_source_1 AND (event.ingested >= \"2024-10-30T23:00:00.000Z\" AND event.ingested <= \"2024-10-30T23:05:00.000Z\")) | STATS host.hostname=TOP(host.hostname, 1, \"desc\"), host.name=TOP(host.name, 1, \"desc\"), entity.last_seen_timestamp=MAX(entity.timestamp) BY entity.id | SORT entity.last_seen_timestamp DESC | LIMIT 10000",
+},

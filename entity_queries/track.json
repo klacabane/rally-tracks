@@ -18,11 +18,20 @@
       "index-pattern": "k8s-pod*",
       "delete-matching-indices": true,
       "template": "pod-template.json"
+    },
+    {
+      "name": "pod-template",
+      "index-pattern": "pod-k8s*",
+      "delete-matching-indices": true,
+      "template": "pod-template.json"
     }
   ],
   "data-streams": [
     {
       "name": "k8s-pod"
+    },
+    {
+      "name": "pod-k8s"
     }
   ],
   "corpora": [
@@ -32,6 +41,18 @@
       "documents": [
         {
           "target-data-stream": "k8s-pod",
+          "source-file": "doc-ds-metrics-kubernetes.pod.json.bz2",
+          "document-count": 1000000,
+          "uncompressed-bytes": 3643397132
+        }
+      ]
+    },
+    {
+      "name": "pod-k8s",
+      "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
+      "documents": [
+        {
+          "target-data-stream": "pod-k8s",
           "source-file": "doc-ds-metrics-kubernetes.pod.json.bz2",
           "document-count": 1000000,
           "uncompressed-bytes": 3643397132
