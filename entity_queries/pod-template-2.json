@@ -2,7 +2,7 @@
 
 {
   "index_patterns": [
-    "k8s-pod*"
+    "pod-k8s*"
   ],
   "data_stream": {},
     "template": {
@@ -735,3 +735,4 @@
       "aliases": {}
     }
   }
+

@@ -107,8 +107,8 @@
       {%- endif -%}{# serverless-post-ingest-sleep-marker-end #}
       {
         "parallel": {
-          "completed-by": "esql_single_source-limit-100_optimized",
-          "clients": 3,
+          "completed-by": "esql_single_source-limit-1000_optimized",
+          "clients": 2,
           "tasks": [
             {
               "name": "esql_touch-pod-1",
@@ -116,12 +116,7 @@
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
-              "name": "esql_touch-pod-2",
-              "operation": "touch-pod-index-2",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "operation": "esql_single_source-limit-100_optimized",
+              "operation": "esql_single_source-limit-1000_optimized",
               "warmup-iterations": {{search_warmup_iterations}},
               "iterations": {{search_iterations}},
               "target-interval": {{target_interval}},
@@ -132,33 +127,8 @@
       },
       {
         "parallel": {
-          "completed-by": "esql_single_source-limit-10000_optimized",
-          "clients": 3,
-          "tasks": [
-            {
-              "name": "esql_touch-pod-3",
-              "operation": "touch-pod-index",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "name": "esql_touch-pod-4",
-              "operation": "touch-pod-index-2",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "operation": "esql_single_source-limit-10000_optimized",
-              "warmup-iterations": {{search_warmup_iterations}},
-              "iterations": {{search_iterations}},
-              "target-interval": {{target_interval}},
-              "clients": 1
-            }
-          ]
-        }
-      },
-      {
-        "parallel": {
-          "completed-by": "esql_single_source-limit-100_non-optimized",
-          "clients": 3,
+          "completed-by": "esql_single_source-limit-1000_non-optimized",
+          "clients": 2,
           "tasks": [
             {
               "name": "esql_touch-pod-5",
@@ -166,12 +136,7 @@
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
-              "name": "esql_touch-pod-6",
-              "operation": "touch-pod-index-2",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "operation": "esql_single_source-limit-100_non-optimized",
+              "operation": "esql_single_source-limit-1000_non-optimized",
               "warmup-iterations": {{search_warmup_iterations}},
               "iterations": {{search_iterations}},
               "target-interval": {{target_interval}},
@@ -182,32 +147,7 @@
       },
       {
         "parallel": {
-          "completed-by": "esql_single_source-limit-10000_non-optimized",
-          "clients": 3,
-          "tasks": [
-            {
-              "name": "esql_touch-pod-7",
-              "operation": "touch-pod-index",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "name": "esql_touch-pod-8",
-              "operation": "touch-pod-index-2",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "operation": "esql_single_source-limit-10000_non-optimized",
-              "warmup-iterations": {{search_warmup_iterations}},
-              "iterations": {{search_iterations}},
-              "target-interval": {{target_interval}},
-              "clients": 1
-            }
-          ]
-        }
-      },
-      {
-        "parallel": {
-          "completed-by": "esql_two_sources-limit-100",
+          "completed-by": "esql_two_sources-limit-1000",
           "clients": 3,
           "tasks": [
             {
@@ -221,32 +161,7 @@
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
-              "operation": "esql_two_sources-limit-100",
-              "warmup-iterations": {{search_warmup_iterations}},
-              "iterations": {{search_iterations}},
-              "target-interval": {{target_interval}},
-              "clients": 1
-            }
-          ]
-        }
-      },
-      {
-        "parallel": {
-          "completed-by": "esql_two_sources-limit-10000",
-          "clients": 3,
-          "tasks": [
-            {
-              "name": "esql_touch-pod-11",
-              "operation": "touch-pod-index",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "name": "esql_touch-pod-12",
-              "operation": "touch-pod-index-2",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "operation": "esql_two_sources-limit-10000",
+              "operation": "esql_two_sources-limit-1000",
               "warmup-iterations": {{search_warmup_iterations}},
               "iterations": {{search_iterations}},
               "target-interval": {{target_interval}},
