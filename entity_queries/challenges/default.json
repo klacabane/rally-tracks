@@ -58,14 +58,20 @@
         }
       },
       {
-        "operation": "index-pod",
-        "warmup-time-period": 240,
-        "clients": {{bulk_indexing_clients | default(8)}}
-      },
-      {
-        "operation": "index-pod-2",
-        "warmup-time-period": 240,
-        "clients": {{bulk_indexing_clients | default(8)}}
+        "parallel": {
+          "tasks": [
+            {
+              "operation": "index-pod",
+              "warmup-time-period": 120,
+              "clients": {{bulk_indexing_clients | default(8)}}
+            },
+            {
+              "operation": "index-pod-2",
+              "warmup-time-period": 120,
+              "clients": {{bulk_indexing_clients | default(8)}}
+            }
+          ]
+        }
       },
       {
         "name": "refresh-after-index",
@@ -113,7 +119,8 @@
             {
               "name": "esql_touch-pod-1",
               "operation": "touch-pod-index",
-              "clients": {{touch_bulk_indexing_clients}}
+              "clients": {{touch_bulk_indexing_clients}},
+              "target-interval": {{target_interval}}
             },
             {
               "operation": "esql_single_source-limit-1000_optimized",
