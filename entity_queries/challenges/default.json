@@ -119,8 +119,7 @@
             {
               "name": "esql_touch-pod-1",
               "operation": "touch-pod-index",
-              "clients": {{touch_bulk_indexing_clients}},
-              "target-interval": {{target_interval}}
+              "clients": {{touch_bulk_indexing_clients}}
             },
             {
               "operation": "esql_single_source-limit-1000_optimized",

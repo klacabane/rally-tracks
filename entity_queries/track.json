@@ -14,16 +14,10 @@
   "description": "Track for EEM entities queries",
   "composable-templates": [
     {
-      "name": "pod-template-1",
+      "name": "pod-template",
       "index-pattern": "k8s-pod*",
       "delete-matching-indices": true,
       "template": "pod-template.json"
-    },
-    {
-      "name": "pod-template-2",
-      "index-pattern": "pod-k8s*",
-      "delete-matching-indices": true,
-      "template": "pod-template-2.json"
     }
   ],
   "data-streams": [

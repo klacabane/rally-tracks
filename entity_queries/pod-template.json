@@ -2,7 +2,8 @@
 
 {
   "index_patterns": [
-    "k8s-pod*"
+    "k8s-pod*",
+    "pod-k8s*"
   ],
   "data_stream": {},
     "template": {
