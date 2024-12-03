@@ -33,7 +33,7 @@
       "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
       "documents": [
         {
-          "target-data-stream": "100_pod-10k_docs",
+          "target-data-stream": "fixed-cardinality_10k-docs",
           "source-file": "100_pod-10k_docs.json.bz2",
           "document-count": 10000,
           "uncompressed-bytes": 36562120
@@ -45,7 +45,7 @@
       "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
       "documents": [
         {
-          "target-data-stream": "100_pod-100k_docs",
+          "target-data-stream": "fixed-cardinality_100k-docs",
           "source-file": "100_pod-100k_docs.json.bz2",
           "document-count": 100000,
           "uncompressed-bytes": 365790565
@@ -57,7 +57,7 @@
       "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
       "documents": [
         {
-          "target-data-stream": "100_pod-1M_docs",
+          "target-data-stream": "fixed-cardinality_1M-docs",
           "source-file": "100_pod-1M_docs.json.bz2",
           "document-count": 1000000,
           "uncompressed-bytes": 3660902696
@@ -69,7 +69,7 @@
       "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
       "documents": [
         {
-          "target-data-stream": "100_pod-5M_docs",
+          "target-data-stream": "fixed-cardinality_5M-docs",
           "source-file": "100_pod-5M_docs.json.bz2",
           "document-count": 5000000,
           "uncompressed-bytes": 18336767805
