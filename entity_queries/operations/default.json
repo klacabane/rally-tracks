@@ -8,7 +8,7 @@
   "ingest-percentage": {{ingest_percentage | default(100)}}
 },
 {
-  "name": "touch-index_fixed-cardinality-{{dataset}}",
+  "name": "touch-pod-index_fixed-cardinality-{{dataset}}",
   "operation-type": "bulk",
   "corpora" : "fixed-cardinality_{{dataset}}-docs",
   "bulk-size": {{touch_bulk_size}},
