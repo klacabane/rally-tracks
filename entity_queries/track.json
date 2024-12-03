@@ -25,8 +25,8 @@
   "data-streams": [
     { "name": "fixed-cardinality_10k-docs" },
     { "name": "fixed-cardinality_100k-docs" },
-    { "name": "fixed-cardinality_1M-docs" },
-    { "name": "fixed-cardinality_5M-docs" }
+    { "name": "fixed-cardinality_1m-docs" },
+    { "name": "fixed-cardinality_5m-docs" }
   ],
   "corpora": [
     {
@@ -54,24 +54,24 @@
       ]
     },
     {
-      "name": "fixed-cardinality_1M-docs",
+      "name": "fixed-cardinality_1m-docs",
       "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
       "documents": [
         {
-          "target-data-stream": "fixed-cardinality_1M-docs",
-          "source-file": "100_pod-1M_docs.json.bz2",
+          "target-data-stream": "fixed-cardinality_1m-docs",
+          "source-file": "100_pod-1m_docs.json.bz2",
           "document-count": 1000000,
           "uncompressed-bytes": 3660902696
         }
       ]
     },
     {
-      "name": "fixed-cardinality_5M-docs",
+      "name": "fixed-cardinality_5m-docs",
       "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
       "documents": [
         {
-          "target-data-stream": "fixed-cardinality_5M-docs",
-          "source-file": "100_pod-5M_docs.json.bz2",
+          "target-data-stream": "fixed-cardinality_5m-docs",
+          "source-file": "100_pod-5m_docs.json.bz2",
           "document-count": 5000000,
           "uncompressed-bytes": 18336767805
         }
