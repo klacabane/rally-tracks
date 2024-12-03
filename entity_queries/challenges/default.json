@@ -57,30 +57,14 @@
           "retry-until-success": true
         }
       },
+      {% for dataset in fixed_cardinality_datasets %}
       {
-        "name": "index-pod_fixed-cardinality-10k",
-        "operation": "index-pod_fixed-cardinality-10k",
+        "name": "index-pod_fixed-cardinality-{{dataset}}",
+        "operation": "index-pod_fixed-cardinality-{{dataset}}",
         "warmup-time-period": 10,
         "clients": {{bulk_indexing_clients | default(8)}}
       },
-      {
-        "name": "index-pod_fixed-cardinality-100k",
-        "operation": "index-pod_fixed-cardinality-100k",
-        "warmup-time-period": 10,
-        "clients": {{bulk_indexing_clients | default(8)}}
-      },
-      {
-        "name": "index-pod_fixed-cardinality-1M",
-        "operation": "index-pod_fixed-cardinality-1M",
-        "warmup-time-period": 120,
-        "clients": {{bulk_indexing_clients | default(8)}}
-      },
-      {
-        "name": "index-pod_fixed-cardinality-5M",
-        "operation": "index-pod_fixed-cardinality-5M",
-        "warmup-time-period": 120,
-        "clients": {{bulk_indexing_clients | default(8)}}
-      },
+      {%- endfor %}
       {
         "name": "refresh-after-index",
         "operation": "refresh"
