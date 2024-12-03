@@ -118,13 +118,13 @@
           "clients": 2,
           "tasks": [
             {
-              "name": "touch-pod_fixed-cardinality-{{dataset}}_plaintext-filter",
+              "name": "touch-pod_fixed-cardinality-{{dataset}}_plaintext-filter_no-aggs",
               "operation": "touch-pod-index_fixed-cardinality-{{dataset}}",
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
-              "name": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter",
-              "operation": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter",
+              "name": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter_no-aggs",
+              "operation": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter_no-aggs",
               "warmup-iterations": {{search_warmup_iterations}},
               "iterations": {{search_iterations}},
               "target-interval": {{target_interval}},
