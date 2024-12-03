@@ -76,8 +76,8 @@
         "clients": {{bulk_indexing_clients | default(8)}}
       },
       {
-        "name": "index-pod_fixed-cardinality-10M",
-        "operation": "index-pod_fixed-cardinality-10M",
+        "name": "index-pod_fixed-cardinality-5M",
+        "operation": "index-pod_fixed-cardinality-5M",
         "warmup-time-period": 60,
         "clients": {{bulk_indexing_clients | default(8)}}
       },
