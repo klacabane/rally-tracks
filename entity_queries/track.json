@@ -1,9 +1,9 @@
 {% import "rally.helpers" as rally with context %}
 
-{% set search_iterations = search_iterations | default(20) %} 
+{% set search_iterations = search_iterations | default(40) %} 
 {% set search_warmup_iterations = search_warmup_iterations | default(5) %}
-{% set target_interval = target_interval | default(3) %}
-{% set touch_bulk_indexing_clients = touch_bulk_indexing_clients | default(3) %}
+{% set target_interval = target_interval | default(4) %}
+{% set touch_bulk_indexing_clients = touch_bulk_indexing_clients | default(1) %}
 {% set touch_bulk_size = touch_bulk_size | default(50) %}
 {% set bulk_size = bulk_size | default(10000) %}
 {% set fixed_cardinality_datasets = ["10k", "100k", "1m", "5m"] %}
