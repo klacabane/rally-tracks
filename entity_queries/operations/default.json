@@ -5,7 +5,7 @@
   "corpora" : "fixed-cardinality_{{dataset}}-docs",
   "bulk-size": {{bulk_size | default(5000)}},
   "detailed-results": {{detailed_results | default("false")}},
-  "ingest-percentage": {{ingest_percentage | default(100)}}
+  "ingest-percentage": 100
 },
 {
   "name": "touch-pod-index_fixed-cardinality-{{dataset}}",

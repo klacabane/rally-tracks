@@ -72,13 +72,13 @@
       {
         "name": "index-pod_fixed-cardinality-1M",
         "operation": "index-pod_fixed-cardinality-1M",
-        "warmup-time-period": 60,
+        "warmup-time-period": 120,
         "clients": {{bulk_indexing_clients | default(8)}}
       },
       {
         "name": "index-pod_fixed-cardinality-5M",
         "operation": "index-pod_fixed-cardinality-5M",
-        "warmup-time-period": 60,
+        "warmup-time-period": 120,
         "clients": {{bulk_indexing_clients | default(8)}}
       },
       {
