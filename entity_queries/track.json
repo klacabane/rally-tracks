@@ -1,10 +1,11 @@
 {% import "rally.helpers" as rally with context %}
 
-{% set search_iterations = search_iterations | default(50) %} 
+{% set search_iterations = search_iterations | default(20) %} 
 {% set search_warmup_iterations = search_warmup_iterations | default(5) %}
-{% set target_interval = target_interval | default(4) %}
+{% set target_interval = target_interval | default(3) %}
 {% set touch_bulk_indexing_clients = touch_bulk_indexing_clients | default(3) %}
 {% set touch_bulk_size = touch_bulk_size | default(50) %}
+{% set fixed_cardinality_datasets = ["10k", "100k", "1M", "5M"] %}
 
 {% set start_time = "2024-10-30T23:00:00.000Z" %}
 {% set end_time = "2024-10-30T23:05:00.000Z" %}
@@ -15,41 +16,63 @@
   "composable-templates": [
     {
       "name": "pod-template",
-      "index-pattern": "k8s-pod*",
+      "index-pattern": "fixed-cardinality_*",
       "delete-matching-indices": true,
       "template": "pod-template.json"
     }
   ],
   "data-streams": [
-    {
-      "name": "k8s-pod"
-    },
-    {
-      "name": "pod-k8s"
-    }
+    { "name": "fixed-cardinality_10k-docs" },
+    { "name": "fixed-cardinality_100k-docs" },
+    { "name": "fixed-cardinality_1M-docs" },
+    { "name": "fixed-cardinality_5M-docs" }
   ],
   "corpora": [
     {
-      "name": "k8s-pod",
+      "name": "fixed-cardinality_10k-docs",
       "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
       "documents": [
         {
-          "target-data-stream": "k8s-pod",
-          "source-file": "doc-ds-metrics-kubernetes.pod.json.bz2",
-          "document-count": 1000000,
-          "uncompressed-bytes": 3643397132
+          "target-data-stream": "100_pod-10k_docs",
+          "source-file": "100_pod-10k_docs.json.bz2",
+          "document-count": 10000,
+          "uncompressed-bytes": 36562120
         }
       ]
     },
     {
-      "name": "pod-k8s",
+      "name": "fixed-cardinality_100k-docs",
       "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
       "documents": [
         {
-          "target-data-stream": "pod-k8s",
-          "source-file": "doc-ds-metrics-kubernetes.pod.json.bz2",
+          "target-data-stream": "100_pod-100k_docs",
+          "source-file": "100_pod-100k_docs.json.bz2",
+          "document-count": 100000,
+          "uncompressed-bytes": 365790565
+        }
+      ]
+    },
+    {
+      "name": "fixed-cardinality_1M-docs",
+      "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
+      "documents": [
+        {
+          "target-data-stream": "100_pod-1M_docs",
+          "source-file": "100_pod-1M_docs.json.bz2",
           "document-count": 1000000,
-          "uncompressed-bytes": 3643397132
+          "uncompressed-bytes": 3660902696
+        }
+      ]
+    },
+    {
+      "name": "fixed-cardinality_5M-docs",
+      "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
+      "documents": [
+        {
+          "target-data-stream": "100_pod-5M_docs",
+          "source-file": "100_pod-5M_docs.json.bz2",
+          "document-count": 5000000,
+          "uncompressed-bytes": 18336767805
         }
       ]
     }
