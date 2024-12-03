@@ -112,32 +112,12 @@
             {
               "name": "touch-pod_fixed-cardinality-{{dataset}}_plaintext-filter_no-aggs",
               "operation": "touch-pod-index_fixed-cardinality-{{dataset}}",
+              "target-interval": {{target_interval - 1}},
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
               "name": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter_no-aggs",
               "operation": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter_no-aggs",
-              "warmup-iterations": {{search_warmup_iterations}},
-              "iterations": {{search_iterations}},
-              "target-interval": {{target_interval}},
-              "clients": 1
-            }
-          ]
-        }
-      },
-      {
-        "parallel": {
-          "completed-by": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter_top-1-aggs",
-          "clients": 2,
-          "tasks": [
-            {
-              "name": "touch-pod_fixed-cardinality-{{dataset}}_plaintext-filter_top-1-aggs",
-              "operation": "touch-pod-index_fixed-cardinality-{{dataset}}",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "name": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter_top-1-aggs",
-              "operation": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter_top-1-aggs",
               "warmup-iterations": {{search_warmup_iterations}},
               "iterations": {{search_iterations}},
               "target-interval": {{target_interval}},
@@ -154,6 +134,7 @@
             {
               "name": "touch-pod_fixed-cardinality-{{dataset}}_plaintext-filter_top-3-aggs",
               "operation": "touch-pod-index_fixed-cardinality-{{dataset}}",
+              "target-interval": {{target_interval - 1}},
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
@@ -175,32 +156,12 @@
             {
               "name": "touch-pod_fixed-cardinality-{{dataset}}_dsl-filter_no-aggs",
               "operation": "touch-pod-index_fixed-cardinality-{{dataset}}",
+              "target-interval": {{target_interval - 1}},
               "clients": {{touch_bulk_indexing_clients}}
             },
             {
               "name": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_dsl-filter_no-aggs",
               "operation": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_dsl-filter_no-aggs",
-              "warmup-iterations": {{search_warmup_iterations}},
-              "iterations": {{search_iterations}},
-              "target-interval": {{target_interval}},
-              "clients": 1
-            }
-          ]
-        }
-      },
-      {
-        "parallel": {
-          "completed-by": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_dsl-filter_top-1-aggs",
-          "clients": 2,
-          "tasks": [
-            {
-              "name": "touch-pod_fixed-cardinality-{{dataset}}_dsl-filter_top-1-aggs",
-              "operation": "touch-pod-index_fixed-cardinality-{{dataset}}",
-              "clients": {{touch_bulk_indexing_clients}}
-            },
-            {
-              "name": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_dsl-filter_top-1-aggs",
-              "operation": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_dsl-filter_top-1-aggs",
               "warmup-iterations": {{search_warmup_iterations}},
               "iterations": {{search_iterations}},
               "target-interval": {{target_interval}},
@@ -217,6 +178,7 @@
             {
               "name": "touch-pod_fixed-cardinality-{{dataset}}_dsl-filter_top-3-aggs",
               "operation": "touch-pod-index_fixed-cardinality-{{dataset}}",
+              "target-interval": {{target_interval - 1}},
               "clients": {{touch_bulk_indexing_clients}}
             },
             {

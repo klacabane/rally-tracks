@@ -23,12 +23,6 @@
   "query": "FROM fixed-cardinality_{{dataset}}-docs | WHERE host.name::keyword IS NOT NULL | WHERE @timestamp >= \"2024-10-30T23:00:00.000Z\" AND @timestamp <= \"2024-10-30T23:05:00.000Z\" | STATS entity.last_seen_timestamp = MAX(@timestamp) BY host.name::keyword | RENAME `host.name::keyword` AS host.name | EVAL entity.type = \"host\", entity.id = host.name, entity.display_name = entity.id | SORT entity.last_seen_timestamp DESC | LIMIT 1000"
 },
 {
-  "name": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter_top-1-aggs",
-  "operation-type": "esql",
-  "detailed-results": {{detailed_results | default("false")}},
-  "query": "FROM fixed-cardinality_{{dataset}}-docs | WHERE host.name::keyword IS NOT NULL | WHERE @timestamp >= \"2024-10-30T23:00:00.000Z\" AND @timestamp <= \"2024-10-30T23:05:00.000Z\" | STATS agent.id = TOP(agent.id::keyword, 1, \"desc\"), kubernetes.pod.ip = TOP(kubernetes.pod.ip::keyword, 1, \"desc\"), entity.last_seen_timestamp = MAX(@timestamp) BY host.name::keyword | RENAME `host.name::keyword` AS host.name | EVAL entity.type = \"host\", entity.id = host.name, entity.display_name = entity.id | SORT entity.last_seen_timestamp DESC | LIMIT 1000"
-},
-{
   "name": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_plaintext-filter_top-3-aggs",
   "operation-type": "esql",
   "detailed-results": {{detailed_results | default("false")}},
@@ -39,64 +33,6 @@
   "operation-type": "esql",
   "detailed-results": {{detailed_results | default("false")}},
   "query": "FROM fixed-cardinality_{{dataset}}-docs | STATS entity.last_seen_timestamp = MAX(@timestamp) BY host.name::keyword | RENAME `host.name::keyword` AS host.name | EVAL entity.type = \"host\", entity.id = host.name, entity.display_name = entity.id | SORT entity.last_seen_timestamp DESC | LIMIT 1000",
-  "filter": {
-    "bool": {
-      "filter": [
-        {
-          "bool": {
-            "should": [
-              {
-                "exists": {
-                  "field": "host.name"
-                }
-              }
-            ],
-            "minimum_should_match": 1
-          }
-        },
-        {
-          "bool": {
-            "filter": [
-              {
-                "bool": {
-                  "should": [
-                    {
-                      "range": {
-                        "@timestamp": {
-                          "gte": "2024-10-30T23:00:00.000Z"
-                        }
-                      }
-                    }
-                  ],
-                  "minimum_should_match": 1
-                }
-              },
-              {
-                "bool": {
-                  "should": [
-                    {
-                      "range": {
-                        "@timestamp": {
-                          "lte": "2024-10-30T23:05:00.000Z"
-                        }
-                      }
-                    }
-                  ],
-                  "minimum_should_match": 1
-                }
-              }
-            ]
-          }
-        }
-      ]
-    }
-  }
-},
-{
-  "name": "esql_single-source_limit-1000_fixed-cardinality-{{dataset}}_dsl-filter_top-1-aggs",
-  "operation-type": "esql",
-  "detailed-results": {{detailed_results | default("false")}},
-  "query": "FROM fixed-cardinality_{{dataset}}-docs | STATS agent.id = TOP(agent.id::keyword, 1, \"desc\"), kubernetes.pod.ip = TOP(kubernetes.pod.ip::keyword, 1, \"desc\"), entity.last_seen_timestamp = MAX(@timestamp) BY host.name::keyword | RENAME `host.name::keyword` AS host.name | EVAL entity.type = \"host\", entity.id = host.name, entity.display_name = entity.id | SORT entity.last_seen_timestamp DESC | LIMIT 1000",
   "filter": {
     "bool": {
       "filter": [
