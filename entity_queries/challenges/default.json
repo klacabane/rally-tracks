@@ -63,7 +63,7 @@
             {% for dataset in fixed_cardinality_datasets %}
             {
               "operation": "index-pod_fixed-cardinality-{{dataset}}",
-              "warmup-time-period": 120,
+              "warmup-time-period": 10,
               "clients": {{bulk_indexing_clients | default(8)}}
             }{{ ", " if not loop.last else "" }}
             {%- endfor %}
