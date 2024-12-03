@@ -5,6 +5,7 @@
 {% set target_interval = target_interval | default(3) %}
 {% set touch_bulk_indexing_clients = touch_bulk_indexing_clients | default(3) %}
 {% set touch_bulk_size = touch_bulk_size | default(50) %}
+{% set bulk_size = bulk_size | default(10000) %}
 {% set fixed_cardinality_datasets = ["10k", "100k", "1M", "5M"] %}
 
 {% set start_time = "2024-10-30T23:00:00.000Z" %}
