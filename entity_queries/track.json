@@ -31,7 +31,7 @@
   "corpora": [
     {
       "name": "fixed-cardinality_10k-docs",
-      "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
+      "base-url": "https://rally-tracks.elastic.co/entity_manager",
       "documents": [
         {
           "target-data-stream": "fixed-cardinality_10k-docs",
@@ -43,7 +43,7 @@
     },
     {
       "name": "fixed-cardinality_100k-docs",
-      "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
+      "base-url": "https://rally-tracks.elastic.co/entity_manager",
       "documents": [
         {
           "target-data-stream": "fixed-cardinality_100k-docs",
@@ -55,7 +55,7 @@
     },
     {
       "name": "fixed-cardinality_1m-docs",
-      "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
+      "base-url": "https://rally-tracks.elastic.co/entity_manager",
       "documents": [
         {
           "target-data-stream": "fixed-cardinality_1m-docs",
@@ -67,7 +67,7 @@
     },
     {
       "name": "fixed-cardinality_5m-docs",
-      "base-url": "https://storage.googleapis.com/eem-rally-benchmark-datasets",
+      "base-url": "https://rally-tracks.elastic.co/entity_manager",
       "documents": [
         {
           "target-data-stream": "fixed-cardinality_5m-docs",
