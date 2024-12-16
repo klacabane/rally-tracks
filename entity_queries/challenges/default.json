@@ -191,6 +191,50 @@
             }
           ]
         }
+      },
+      {
+        "parallel": {
+          "completed-by": "dsl_single-source_limit-1000_fixed-cardinality-{{dataset}}_terms_no-aggs",
+          "clients": 2,
+          "tasks": [
+            {
+              "name": "touch-pod_fixed-cardinality-{{dataset}}_dsl-query_no-aggs",
+              "operation": "touch-pod-index_fixed-cardinality-{{dataset}}",
+              "target-interval": {{target_interval - 1}},
+              "clients": {{touch_bulk_indexing_clients}}
+            },
+            {
+              "name": "dsl_single-source_limit-1000_fixed-cardinality-{{dataset}}_terms_no-aggs",
+              "operation": "dsl_single-source_limit-1000_fixed-cardinality-{{dataset}}_terms_no-aggs",
+              "warmup-iterations": {{search_warmup_iterations}},
+              "iterations": {{search_iterations}},
+              "target-interval": {{target_interval}},
+              "clients": 1
+            }
+          ]
+        }
+      },
+      {
+        "parallel": {
+          "completed-by": "dsl_single-source_limit-1000_fixed-cardinality-{{dataset}}_terms_top-3-aggs",
+          "clients": 2,
+          "tasks": [
+            {
+              "name": "touch-pod_fixed-cardinality-{{dataset}}_dsl-query_top-3-aggs",
+              "operation": "touch-pod-index_fixed-cardinality-{{dataset}}",
+              "target-interval": {{target_interval - 1}},
+              "clients": {{touch_bulk_indexing_clients}}
+            },
+            {
+              "name": "dsl_single-source_limit-1000_fixed-cardinality-{{dataset}}_terms_top-3-aggs",
+              "operation": "dsl_single-source_limit-1000_fixed-cardinality-{{dataset}}_terms_top-3-aggs",
+              "warmup-iterations": {{search_warmup_iterations}},
+              "iterations": {{search_iterations}},
+              "target-interval": {{target_interval}},
+              "clients": 1
+            }
+          ]
+        }
       }{{ ", " if not loop.last else "" }}
       {%- endfor %}
     ]
