@@ -5,59 +5,57 @@
   "detailed-results": {{detailed_results | default("false")}},
   "data-stream": "fixed-cardinality_{{dataset}}-docs",
   "body": {
-    {
-      "size": 0,
-      "query": {
-        "bool": {
-          "filter": [
-            {
-              "bool": {
-                "should": [
-                  {
-                    "exists": {
-                      "field": "host.name"
-                    }
+    "size": 0,
+    "query": {
+      "bool": {
+        "filter": [
+          {
+            "bool": {
+              "should": [
+                {
+                  "exists": {
+                    "field": "host.name"
                   }
-                ],
-                "minimum_should_match": 1
-              }
-            },
-            {
-              "bool": {
-                "filter": [
-                  {
-                    "bool": {
-                      "should": [
-                        {
-                          "range": {
-                            "@timestamp": {
-                              "gte": "2024-10-30T23:00:00.000Z",
-                              "lte": "2024-10-30T23:05:00.000Z"
-                            }
+                }
+              ],
+              "minimum_should_match": 1
+            }
+          },
+          {
+            "bool": {
+              "filter": [
+                {
+                  "bool": {
+                    "should": [
+                      {
+                        "range": {
+                          "@timestamp": {
+                            "gte": "2024-10-30T23:00:00.000Z",
+                            "lte": "2024-10-30T23:05:00.000Z"
                           }
                         }
-                      ],
-                      "minimum_should_match": 1
-                    }
+                      }
+                    ],
+                    "minimum_should_match": 1
                   }
-                ]
-              }
+                }
+              ]
             }
-          ]
-        }
-      },
-      "aggs": {
-        "entities": {
-          "terms": {
-            "size": 1000,
-            "field": "host.name",
-            "order": { "last_seen_timestamp": "desc" }
-          },
-          "aggs": {
-            "last_seen_timestamp": {
-              "max": {
-                "field": "@timestamp"
-              }
+          }
+        ]
+      }
+    },
+    "aggs": {
+      "entities": {
+        "terms": {
+          "size": 1000,
+          "field": "host.name",
+          "order": { "last_seen_timestamp": "desc" }
+        },
+        "aggs": {
+          "last_seen_timestamp": {
+            "max": {
+              "field": "@timestamp"
             }
           }
         }
@@ -71,71 +69,69 @@
   "detailed-results": {{detailed_results | default("false")}},
   "data-stream": "fixed-cardinality_{{dataset}}-docs",
   "body": {
-    {
-      "size": 0,
-      "query": {
-        "bool": {
-          "filter": [
-            {
-              "bool": {
-                "should": [
-                  {
-                    "exists": {
-                      "field": "host.name"
-                    }
+    "size": 0,
+    "query": {
+      "bool": {
+        "filter": [
+          {
+            "bool": {
+              "should": [
+                {
+                  "exists": {
+                    "field": "host.name"
                   }
-                ],
-                "minimum_should_match": 1
-              }
-            },
-            {
-              "bool": {
-                "filter": [
-                  {
-                    "bool": {
-                      "should": [
-                        {
-                          "range": {
-                            "@timestamp": {
-                              "gte": "2024-10-30T23:00:00.000Z",
-                              "lte": "2024-10-30T23:05:00.000Z"
-                            }
+                }
+              ],
+              "minimum_should_match": 1
+            }
+          },
+          {
+            "bool": {
+              "filter": [
+                {
+                  "bool": {
+                    "should": [
+                      {
+                        "range": {
+                          "@timestamp": {
+                            "gte": "2024-10-30T23:00:00.000Z",
+                            "lte": "2024-10-30T23:05:00.000Z"
                           }
                         }
-                      ],
-                      "minimum_should_match": 1
-                    }
+                      }
+                    ],
+                    "minimum_should_match": 1
                   }
-                ]
-              }
+                }
+              ]
             }
-          ]
-        }
-      },
-      "aggs": {
-        "entities": {
-          "terms": {
-            "size": 1000,
-            "field": "host.name",
-            "order": { "last_seen_timestamp": "desc" }
+          }
+        ]
+      }
+    },
+    "aggs": {
+      "entities": {
+        "terms": {
+          "size": 1000,
+          "field": "host.name",
+          "order": { "last_seen_timestamp": "desc" }
+        },
+        "aggs": {
+          "last_seen_timestamp": {
+            "max": {
+              "field": "@timestamp"
+            }
           },
-          "aggs": {
-            "last_seen_timestamp": {
-              "max": {
-                "field": "@timestamp"
-              }
-            },
-            "agent.id": {
-              "terms": {
-                "field": "agent.id",
-                "size": 3
-              }
-            },
-            "kubernetes.pod.ip": {
-              "terms": {
-                "field": "kubernetes.pod.ip",
-                "size": 3
-              }
+          "agent.id": {
+            "terms": {
+              "field": "agent.id",
+              "size": 3
+            }
+          },
+          "kubernetes.pod.ip": {
+            "terms": {
+              "field": "kubernetes.pod.ip",
+              "size": 3
             }
           }
         }
